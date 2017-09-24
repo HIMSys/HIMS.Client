@@ -1,0 +1,1 @@
+export const LOAD_TESTS_SUCCESS = 'LOAD_TESTS_SUCCESS';
