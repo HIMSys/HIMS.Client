@@ -7,22 +7,28 @@ import TestBox from './TestBox';
 class TestPage extends React.Component {
   constructor(props, context) {
     super(props, context);
+
+    this.deleteTestRecord = this.deleteTestRecord.bind(this);
   }
 
-  courseRow(course, index) {
-    return <div key={index}>{course.title}</div>;
+  deleteTestRecord(testId) {
+    this.props.actions.deleteTest(testId);
   }
 
   render() {
     return (
-      <TestBox tests={this.props.tests} />
+      <div className="container-fluid">
+        <TestBox tests={this.props.tests} deleteTestRecord={this.deleteTestRecord}/>
+        {this.props.children}
+      </div>
     );
   }
 }
 
 TestPage.propTypes = {
   tests: PropTypes.array.isRequired,
-  actions: PropTypes.object.isRequired
+  actions: PropTypes.object.isRequired,
+  children: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state, ownProps) {
