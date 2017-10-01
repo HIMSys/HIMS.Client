@@ -1,3 +1,4 @@
 export default {
-  tests: []
+  tests: [],
+  app: {login: false}
 };

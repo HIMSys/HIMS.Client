@@ -10,12 +10,14 @@ const myHeaders = new Headers();
 const myGetInit = { method: 'GET',
                headers: myHeaders,
                mode: 'cors',
-               cache: 'default' };
+               cache: 'default',
+               credentials: 'include' };
 
 const myPostInit = { method: "POST",
                     headers: {'Content-Type': 'application/json'},
                     mode: 'cors',
-                    cache: 'default'};
+                    cache: 'default',
+                    credentials: 'include' };
 
 class TestApi {
   static getAllTests() {

@@ -8,7 +8,27 @@ class TestPage extends React.Component {
   constructor(props, context) {
     super(props, context);
 
+    this.state = {
+      intervalId: NaN
+    };
+
     this.deleteTestRecord = this.deleteTestRecord.bind(this);
+    this.timer = this.timer.bind(this);
+  }
+
+  componentDidMount() {
+    let intervalId = setInterval(this.timer, 2000);
+    this.setState({intervalId: intervalId});
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.state.intervalId);
+  }
+
+  timer() {
+    if(this.props.app.login) {
+      this.props.actions.loadTests();
+    }
   }
 
   deleteTestRecord(testId) {
@@ -33,7 +53,8 @@ TestPage.propTypes = {
 
 function mapStateToProps(state, ownProps) {
   return {
-    tests: state.tests
+    tests: state.tests,
+    app: state.app
   };
 }
 

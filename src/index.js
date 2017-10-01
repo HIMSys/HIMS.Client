@@ -8,9 +8,10 @@ import  routes from './routes';
 import {loadTests} from './actions/testActions';
 import  './styles/styles.css';
 import  '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import {isAuthorize} from "./actions/appActions";
 
 const store = configureStore();
-store.dispatch(loadTests());
+store.dispatch(isAuthorize());
 
 render(
   <Provider store={store}>
