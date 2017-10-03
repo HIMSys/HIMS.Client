@@ -10,6 +10,7 @@ import {
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import  * as testActions from '../../actions/testActions';
+import  * as popupActions from '../../actions/popupActions';
 import TestForm from './TestForm';
 
 class AddEditTestPopup extends React.Component {
@@ -17,8 +18,7 @@ class AddEditTestPopup extends React.Component {
     super(props, context);
 
     this.state = {
-      isOpen: true,
-      test: Object.assign({}, this.props.test)
+      isOpen: true
     };
 
     this.saveTest = this.saveTest.bind(this);
@@ -26,8 +26,21 @@ class AddEditTestPopup extends React.Component {
     this.updateTestState = this.updateTestState.bind(this);
   }
 
+  componentDidMount() {
+    this.props.actions.popupDidMount(Object.assign({}, this.props.test));
+  }
+
+  componentWillUnmount() {
+    this.props.actions.popupWillUnmount();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.popupState.testId != nextProps.test.testId) {
+      this.props.actions.popupDidMount(Object.assign({}, this.props.test));
+    }
+  }
   saveTest() {
-    this.props.actions.saveTest(this.state.test);
+    this.props.actions.saveTest(this.props.popupState);
     this.closeModal();
   }
 
@@ -46,19 +59,13 @@ class AddEditTestPopup extends React.Component {
 
   updateTestState(event) {
     const field = event.target.name;
-    let test = this.state.test;
+    let test = Object.assign({}, this.props.popupState);
     test[field] = event.target.value;
-    return this.setState( {test: test} );
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.props.test.testId != nextProps.test.testId) {
-      this.setState({test: Object.assign({}, nextProps.test)});
-    }
+    return  this.props.actions.popupChangeState(test);
   }
 
   render() {
-    const title = this.state.test.testId
+    const title = this.props.popupState.testId
       ? 'Edit test record'
       : 'Add test record';
 
@@ -69,7 +76,7 @@ class AddEditTestPopup extends React.Component {
           <ModalTitle>{title}</ModalTitle>
         </ModalHeader>
         <ModalBody>
-        <TestForm test={this.state.test} onChange={this.updateTestState}/>
+        <TestForm test={this.props.popupState} onChange={this.updateTestState}/>
         </ModalBody>
         <ModalFooter>
           <button className="btn btn-default" onClick={this.closeModal}>
@@ -103,20 +110,21 @@ function getTestById(tests, id) {
 function mapStateToProps(state, ownProps) {
   const testId = ownProps.params.id;
 
-  let test = {testId: NaN, name: '', description: ''};
+  let test = {testId: '', name: '', description: ''};
 
   if(testId && state.tests.length > 0) {
     test = getTestById(state.tests, testId);
   }
 
   return {
-    test: test
+    test: test,
+    popupState: state.popup
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-      actions: bindActionCreators(testActions, dispatch)
+      actions: bindActionCreators(Object.assign({}, testActions, popupActions), dispatch)
   };
 }
 
