@@ -62,8 +62,6 @@ class Header extends React.Component {
   }
 
   render() {
-
-
     return (
       <nav className="navbar navbar-inverse">
         <div className="container-fluid">
@@ -75,7 +73,7 @@ class Header extends React.Component {
           </ul>
           {this.getLoginModule()}
         </div>
-        <ProgressBar />
+        {this.props.loading && <ProgressBar />}
       </nav>
     );
   }
@@ -83,7 +81,8 @@ class Header extends React.Component {
 
 Header.propTypes = {
   login: PropTypes.func.isRequired,
-  loginSuccess: PropTypes.bool.isRequired
+  loginSuccess: PropTypes.bool.isRequired,
+  loading: PropTypes.bool.isRequired
 };
 
 export default Header;

@@ -25,7 +25,8 @@ class App extends React.Component {
       <div className="container-fluid">
         <Header login={this.login}
                 logout={this.logout}
-                loginSuccess={this.props.app.login}/>
+                loginSuccess={this.props.app.login}
+                loading={this.props.loading} />
         {this.props.children}
       </div>
     );
@@ -35,12 +36,14 @@ class App extends React.Component {
 App.propTypes = {
   children: PropTypes.object.isRequired,
   loginSuccess: PropTypes.bool.isRequired,
-  app: PropTypes.object.isRequired
+  app: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired
 };
 
 function mapStateToProps(state, ownProps) {
   return {
-    app: state.app
+    app: state.app,
+    loading: state.ajaxCallsInProgress > 0
   };
 }
 

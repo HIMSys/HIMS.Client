@@ -8,6 +8,7 @@ import  routes from './routes';
 import {loadTests} from './actions/testActions';
 import  './styles/styles.css';
 import  '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import  '../node_modules/toastr/build/toastr.min.css';
 import {isAuthorize} from "./actions/appActions";
 
 const store = configureStore();

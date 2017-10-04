@@ -1,5 +1,6 @@
 import * as types from './actionTypes';
 import appApi from '../api/appApi';
+import {ajaxCallError, beginAjaxCall} from "./ajaxStatusActions";
 
 export  function  loginAppSuccess() {
   return { type: types.LOGIN_APP_SUCCESS};
@@ -7,6 +8,8 @@ export  function  loginAppSuccess() {
 
 export function loginApp(credentials) {
   return function (dispatch) {
+    dispatch(beginAjaxCall());
+
     return appApi.loginApp(credentials)
     .then((resp) => {
       if (resp.ok)

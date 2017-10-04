@@ -12,18 +12,22 @@ import {bindActionCreators} from 'redux';
 import  * as testActions from '../../actions/testActions';
 import  * as popupActions from '../../actions/popupActions';
 import TestForm from './TestForm';
+import toastr from 'toastr';
 
 class AddEditTestPopup extends React.Component {
   constructor(props, context) {
     super(props, context);
 
     this.state = {
-      isOpen: true
+      isOpen: true,
+      errors: {},
+      saving: false
     };
 
     this.saveTest = this.saveTest.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.updateTestState = this.updateTestState.bind(this);
+    this.close = this.close.bind(this);
   }
 
   componentDidMount() {
@@ -40,7 +44,18 @@ class AddEditTestPopup extends React.Component {
     }
   }
   saveTest() {
-    this.props.actions.saveTest(this.props.popupState);
+    this.setState({saving: true});
+    this.props.actions.saveTest(this.props.popupState)
+      .then(() => this.close())
+      .catch(error => {
+        toastr.error(error);
+        this.setState({saving: false});
+      });
+  }
+
+  close() {
+    this.setState({saving: false});
+    toastr.success('Test saved');
     this.closeModal();
   }
 
@@ -68,6 +83,9 @@ class AddEditTestPopup extends React.Component {
     const title = this.props.popupState.testId
       ? 'Edit test record'
       : 'Add test record';
+    const saveButtonText = this.state.saving
+      ? 'Saving ...'
+      : 'Save';
 
     return (
       <Modal isOpen={this.state.isOpen} onRequestHide={this.closeModal}>
@@ -82,8 +100,10 @@ class AddEditTestPopup extends React.Component {
           <button className="btn btn-default" onClick={this.closeModal}>
             Close
           </button>
-          <button className="btn btn-primary" onClick={this.saveTest}>
-            Save
+          <button className="btn btn-primary"
+                  onClick={this.saveTest}
+                  disabled={this.state.saving}>
+            {saveButtonText}
           </button>
         </ModalFooter>
       </Modal>

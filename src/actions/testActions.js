@@ -1,5 +1,6 @@
 import * as types from './actionTypes';
 import testApi from '../api/testApi';
+import {ajaxCallError, beginAjaxCall} from "./ajaxStatusActions";
 
 export  function  loadTestsSuccess(tests) {
   return { type: types.LOAD_TESTS_SUCCESS, tests };
@@ -7,6 +8,8 @@ export  function  loadTestsSuccess(tests) {
 
 export function loadTests() {
   return function (dispatch) {
+    dispatch(beginAjaxCall());
+
     return testApi.getAllTests()
     .then((resp) => resp.json())
     .then((tests) => {
@@ -27,6 +30,8 @@ export function updateTestSuccess(test) {
 
 export function saveTest(test) {
   return function (dispatch, getState) {
+      dispatch(beginAjaxCall());
+
       let saveProm = test.testId
         ? testApi.updateTest(test)
         : testApi.createTest(test);
@@ -43,6 +48,7 @@ export function saveTest(test) {
           dispatch(successCallback(test));
       })
       .catch(error => {
+        dispatch(ajaxCallError(error));
         throw(error);
       });
   };
@@ -54,6 +60,8 @@ export function deleteTestSuccess(testId) {
 
 export function deleteTest(testId) {
   return function (dispatch) {
+    dispatch(beginAjaxCall());
+
     return testApi.deleteTest(testId)
     .then((resp) => {
       if (resp.ok)
