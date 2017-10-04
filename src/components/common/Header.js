@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import { Link, IndexLink } from 'react-router';
+import ProgressBar from './ProgressBar';
 
 class Header extends React.Component {
   constructor(props, context) {
@@ -61,6 +62,8 @@ class Header extends React.Component {
   }
 
   render() {
+
+
     return (
       <nav className="navbar navbar-inverse">
         <div className="container-fluid">
@@ -72,6 +75,7 @@ class Header extends React.Component {
           </ul>
           {this.getLoginModule()}
         </div>
+        <ProgressBar />
       </nav>
     );
   }
