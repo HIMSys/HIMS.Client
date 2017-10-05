@@ -14,7 +14,7 @@ import  * as popupActions from '../../actions/popupActions';
 import TestForm from './TestForm';
 import toastr from 'toastr';
 
-class AddEditTestPopup extends React.Component {
+export class AddEditTestPopup extends React.Component {
   constructor(props, context) {
     super(props, context);
 
@@ -43,7 +43,25 @@ class AddEditTestPopup extends React.Component {
       this.props.actions.popupDidMount(Object.assign({}, this.props.test));
     }
   }
+
+  addEditTestPopupIsValid() {
+    let popupIsValid = true;
+    let errors = {};
+
+    if (this.props.test.name.length < 3) {
+      errors.name = 'Name of test must be at least 3 characters.';
+      popupIsValid = false;
+    }
+
+    this.setState({errors: errors});
+    return popupIsValid;
+  }
+
   saveTest() {
+    if (!this.addEditTestPopupIsValid()) {
+      return;
+    }
+
     this.setState({saving: true});
     this.props.actions.saveTest(this.props.popupState)
       .then(() => this.close())
@@ -94,13 +112,14 @@ class AddEditTestPopup extends React.Component {
           <ModalTitle>{title}</ModalTitle>
         </ModalHeader>
         <ModalBody>
-        <TestForm test={this.props.popupState} onChange={this.updateTestState}/>
+          <TestForm test={this.props.popupState} onChange={this.updateTestState}/>
         </ModalBody>
         <ModalFooter>
           <button className="btn btn-default" onClick={this.closeModal}>
             Close
           </button>
-          <button className="btn btn-primary"
+          <button id="saveButton"
+                  className="btn btn-primary"
                   onClick={this.saveTest}
                   disabled={this.state.saving}>
             {saveButtonText}
