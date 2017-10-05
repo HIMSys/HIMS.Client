@@ -38,7 +38,7 @@ describe('Async Actions', () => {
   });
 
   describe('Test Actions Thunk', () => {
-    it('should create BEGIN_AJAX_CALL and LOAD_COURSES_SUCCESS when loading tests', (done) => {
+    it('should create BEGIN_AJAX_CALL and LOAD_TESTS_SUCCESS when loading tests', (done) => {
       fetchMock.get('*', {body: mockResult});
       // nock('http://localhost:22795/api/test')
       //    .get('/test')
@@ -46,7 +46,7 @@ describe('Async Actions', () => {
 
       const expectedActions = [
         {type: types.BEGIN_AJAX_CALL},
-        {type: types.LOAD_COURSES_SUCCESS, body: mockResult }
+        {type: types.LOAD_TESTS_SUCCESS, body: mockResult }
       ];
 
       const store = mockStore({tests:[]}, expectedActions, done);
