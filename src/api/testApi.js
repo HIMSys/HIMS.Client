@@ -5,10 +5,8 @@ const ADD_TEST = '/api/test/addtest';
 const UPDATE_TEST = '/api/test/updatetest';
 const DELETE_TEST = '/api/test/deletetest';
 
-const myHeaders = new Headers();
-
 const myGetInit = { method: 'GET',
-               headers: myHeaders,
+               headers: {},
                mode: 'cors',
                cache: 'default',
                credentials: 'include' };
@@ -20,8 +18,12 @@ const myPostInit = { method: "POST",
                     credentials: 'include' };
 
 class TestApi {
-  static getAllTests() {
-    return fetch(WEB_API_URL + GET_ALL_TESTS, myGetInit);
+  static getAllTests(criterion) {
+   let filter = criterion
+    ? `?$filter=substringof('${criterion}',Name)`
+    : '';
+
+    return fetch(WEB_API_URL + GET_ALL_TESTS + filter, myGetInit);
   }
 
   static createTest(test) {

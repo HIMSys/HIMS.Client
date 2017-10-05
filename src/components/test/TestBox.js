@@ -28,7 +28,7 @@ class TestBox extends React.Component {
 
   timer() {
     if(this.props.app.login) {
-      this.props.actions.loadTests();
+      this.props.actions.loadTests(this.props.filter);
     }
   }
 

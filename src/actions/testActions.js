@@ -6,11 +6,11 @@ export  function  loadTestsSuccess(tests) {
   return { type: types.LOAD_TESTS_SUCCESS, tests };
 }
 
-export function loadTests() {
+export function loadTests(nameContainsFilter) {
   return function (dispatch) {
     dispatch(beginAjaxCall());
 
-    return testApi.getAllTests()
+    return testApi.getAllTests(nameContainsFilter)
     .then((resp) => resp.json())
     .then((tests) => {
       dispatch(loadTestsSuccess(tests));
