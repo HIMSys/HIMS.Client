@@ -2,6 +2,7 @@ import  React, {PropTypes} from 'react';
 import TestBox from './TestBox';
 import {Link} from 'react-router';
 import TextInput from '../common/TextInput';
+import {Translate} from 'react-redux-i18n';
 
 class TestPage extends React.Component {
   constructor(props, context) {
@@ -28,7 +29,7 @@ class TestPage extends React.Component {
           value={this.state.filterVal}
           onChange={this.onFilterChange}/>
         <Link className="btn btn-primary" to="/test/testmodal">
-          Add new record
+          <Translate value="application.addButton"/>
         </Link>
         <TestBox filter={this.state.filterVal}/>
         {this.props.children}
