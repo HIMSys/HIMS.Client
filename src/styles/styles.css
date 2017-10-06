@@ -1,4 +1,8 @@
 .progressBar  {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 999;
   width: 100%;
 	color: #FFFFFF;
 	background: linear-gradient(-45deg, #FF0000, #0088FF);
