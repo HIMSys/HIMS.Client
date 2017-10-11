@@ -18,7 +18,7 @@ const translationsObject = {
     head: {
       testsLabel: 'Tests CRUD Grid',
       login: 'Log in',
-      logout: 'Log out',
+      logout: 'Log out'
     },
     testPopup: {
       editPopupTitle: 'Edit test record',
@@ -44,7 +44,7 @@ const translationsObject = {
     head: {
       testsLabel: 'CRUD-таблица Контактов',
       login: 'Зайти',
-      logout: 'Выйти',
+      logout: 'Выйти'
     },
     testPopup: {
       editPopupTitle: 'Отредактировать тест',
