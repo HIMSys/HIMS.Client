@@ -12,6 +12,9 @@ export default  function courseReducer(state = initialState.tests, action) {
        Object.assign({}, action.test)
      ];
 
+    case types.LOAD_TESTS_FAIL:
+     return initialState.tests;
+
    case types.UPDATE_TEST_SUCCESS:
      return [
        ...state.filter(test => test.testId !== action.test.testId),

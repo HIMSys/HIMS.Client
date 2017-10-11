@@ -23,16 +23,17 @@ class TestPage extends React.Component {
   render() {
     return (
       <div className="container-fluid">
-      <TextInput
-          name="description"
-          label="Filter Test by contains: "
-          value={this.state.filterVal}
-          onChange={this.onFilterChange}/>
         <Link className="btn btn-primary" to="/test/testmodal">
-          <Translate value="application.addButton"/>
+          <Translate value="button.addTest"/>
         </Link>
-        <TestBox filter={this.state.filterVal}/>
-        {this.props.children}
+        <TextInput
+            className="filter"
+            name="description"
+            translateVal="label.testNameFilter"
+            value={this.state.filterVal}
+            onChange={this.onFilterChange}/>
+          <TestBox filter={this.state.filterVal}/>
+          {this.props.children}
       </div>
     );
   }

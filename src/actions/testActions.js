@@ -6,15 +6,25 @@ export  function  loadTestsSuccess(tests) {
   return { type: types.LOAD_TESTS_SUCCESS, tests };
 }
 
+export  function  loadTestsFail() {
+  return { type: types.LOAD_TESTS_FAIL };
+}
+
 export function loadTests(nameContainsFilter) {
   return function (dispatch) {
     dispatch(beginAjaxCall());
 
     return testApi.getAllTests(nameContainsFilter)
-    .then((resp) => resp.json())
-    .then((tests) => {
-      dispatch(loadTestsSuccess(tests));
+    .then((resp) => {
+      if(resp.ok)
+        return resp.json();
+      else
+        dispatch(loadTestsFail());
+    }).then((tests) => {
+      if(tests)
+        dispatch(loadTestsSuccess(tests));
     }).catch(error => {
+      dispatch(ajaxCallError(error));
       throw(error);
     });
   };
@@ -31,10 +41,10 @@ export function updateTestSuccess(test) {
 export function saveTest(test) {
   return function (dispatch, getState) {
       dispatch(beginAjaxCall());
-
       let saveProm = test.testId
         ? testApi.updateTest(test)
         : testApi.createTest(test);
+
       let successCallback = test.testId
         ? updateTestSuccess
         : createTestSuccess;

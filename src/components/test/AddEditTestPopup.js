@@ -13,6 +13,7 @@ import  * as testActions from '../../actions/testActions';
 import  * as popupActions from '../../actions/popupActions';
 import TestForm from './TestForm';
 import toastr from 'toastr';
+import {Translate, I18n} from 'react-redux-i18n';
 
 export class AddEditTestPopup extends React.Component {
   constructor(props, context) {
@@ -48,7 +49,7 @@ export class AddEditTestPopup extends React.Component {
     let popupIsValid = true;
     let errors = {};
 
-    if (this.props.test.name.length < 3) {
+    if (this.props.popupState.name.length < 3) {
       errors.name = 'Name of test must be at least 3 characters.';
       popupIsValid = false;
     }
@@ -99,11 +100,11 @@ export class AddEditTestPopup extends React.Component {
 
   render() {
     const title = this.props.popupState.testId
-      ? 'Edit test record'
-      : 'Add test record';
+      ? I18n.t('testPopup.editPopupTitle')
+      : I18n.t('testPopup.addPopupTitle');
     const saveButtonText = this.state.saving
-      ? 'Saving ...'
-      : 'Save';
+      ? I18n.t('button.saving')
+      : I18n.t('button.save');
 
     return (
       <Modal isOpen={this.state.isOpen} onRequestHide={this.closeModal}>
@@ -116,7 +117,7 @@ export class AddEditTestPopup extends React.Component {
         </ModalBody>
         <ModalFooter>
           <button className="btn btn-default" onClick={this.closeModal}>
-            Close
+            <Translate value="button.close" />
           </button>
           <button id="saveButton"
                   className="btn btn-primary"

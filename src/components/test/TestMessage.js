@@ -1,5 +1,6 @@
 import  React, {PropTypes} from 'react';
 import {Link} from 'react-router';
+import {Translate} from 'react-redux-i18n';
 
 
 class TestMessage extends React.Component {
@@ -30,7 +31,10 @@ class TestMessage extends React.Component {
           {this.props.children}
         </td>
         <td className="delete col-md-4">
-          <button className="btn btn-danger" onClick={this.onDelete}>Delete</button>
+          <button className="btn btn-danger"
+                  onClick={this.onDelete}>
+            <Translate value="button.delete" />
+          </button>
         </td>
       </tr>
     );

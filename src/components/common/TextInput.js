@@ -1,11 +1,12 @@
 import React, {PropTypes} from 'react';
+import {Translate} from 'react-redux-i18n';
 
-const TextInput = ({name, label, onChange, placeholder, value}) => {
-  let wrapperClass = 'form-group';
+const TextInput = ({name, label, onChange, placeholder, value, className, translateVal}) => {
+  let wrapperClass = 'form-group ' + className;
 
   return (
     <div className={wrapperClass}>
-      <label htmlFor={name}>{label}</label>
+      <label htmlFor={name}>{translateVal ? <Translate value={translateVal}/> : label}</label>
       <div className="field">
         <input
           type="text"

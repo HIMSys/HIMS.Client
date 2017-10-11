@@ -1,6 +1,7 @@
 import * as types from './actionTypes';
 import appApi from '../api/appApi';
 import {ajaxCallError, beginAjaxCall} from "./ajaxStatusActions";
+import { setLocale } from 'react-redux-i18n';
 
 export  function  loginAppSuccess() {
   return { type: types.LOGIN_APP_SUCCESS};
@@ -51,3 +52,11 @@ export function isAuthorize() {
     });
   };
 }
+
+export  function  languageChange(languageId) {
+  return function (dispatch) {
+    dispatch(setLocale(languageId));
+  };
+}
+
+

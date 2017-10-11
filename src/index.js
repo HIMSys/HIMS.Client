@@ -11,7 +11,7 @@ import  './styles/styles.css';
 import  '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import  '../node_modules/toastr/build/toastr.min.css';
 import {isAuthorize} from "./actions/appActions";
-import translationsObject from './translation';
+import translationsObject from './localization/translation';
 import { loadTranslations, setLocale, syncTranslationWithStore } from 'react-redux-i18n';
 
 const store = configureStore();
